@@ -1,8 +1,14 @@
 import React from 'react'
+import TodoList from './Todos/TodoList/TodoList'
 
 const TodoApp = () => {
   return (
-    <div>TodoApp</div>
+    <>
+    
+      <div >
+      <TodoList/>
+      </div>
+    </>
   )
 }
 
