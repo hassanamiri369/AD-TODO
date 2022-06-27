@@ -14,7 +14,10 @@ const initialState = {
 
 const reducer = (state , action ) => {
     switch(action.type){
-
+        case "addTodo":
+            return {...state , todos : [...state.todos , action.payload]}
+        case "deleteTodo":
+            return {...state , todos : action.payload}
         default : 
             return state
     }
