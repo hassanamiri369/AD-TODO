@@ -13,6 +13,11 @@
     align-items: center;
     /* border-bottom:1px solid gray ; */
     box-shadow: 0 0 10px gray;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    
 }
 
 
@@ -20,6 +25,7 @@
 .sidebar-main{
     display: flex;
     /* margin-top: 5rem; */
+    margin-top: 3.5rem;
 }
 
 
