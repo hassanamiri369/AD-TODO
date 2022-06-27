@@ -1,12 +1,18 @@
 import React , {useContext , useState}from 'react'
 import { todoContext } from '../../context/context'
-import nextId from 'react-id-generator';
 
+import AddTodo from '../AddTodo/AddTodo';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 
 
 import { TiDelete } from 'react-icons/ti';
+
+import "./style.css"
+
 
 const TodoList = () => {
 
@@ -14,24 +20,7 @@ const TodoList = () => {
     const {todos} = state;
     console.log(todos)
 
-    // add todo 
-    const [title , setTitle] = useState("")
-    const [body , setBody]= useState("") 
-    const [category , setCategory] = useState("")
-    const [description , setDescription] = useState("")
-
-
-    const newTodo = {id : nextId() , title , body , category , description , complete : false}
-    // after submit
-    const handleSubmit = (e)=>{
-      e.preventDefault()
-      dispatch({type : "addTodo" , payload : newTodo})
-      setTitle("")
-      setBody("")
-      setCategory("")
-      setDescription("")
-
-    }
+    
 
 
     // delete todo 
@@ -45,35 +34,8 @@ const TodoList = () => {
   return (
     <>
        <div>
-        <div className='add-todo'>
-          <form onSubmit={(e) =>handleSubmit(e)}>
-            <div>
-              <label>Title : </label>
-              <input type={'text'} value={title} onChange={(e)=> setTitle(e.target.value)} placeholder={'title'}/>
-            </div>
-
-            <div>
-              <label>body : </label>
-              <input type={'text'} value={body} onChange={(e)=> setBody(e.target.value)} placeholder={'body'}/>
-            </div>
-
-            <div>
-              <label>description : </label>
-              <input type={'text'} value={description} onChange={(e)=> setDescription(e.target.value)} placeholder={'description'}/>
-            </div>
-
-            <div>
-              <label>category : </label>
-              <input type={'text'} value={category} onChange={(e)=> setCategory(e.target.value)} placeholder={'category'}/>
-            </div>
-            <div>
-              <button type={'submit'}>Add todo</button>
-            </div>
-
-
-          </form>
-        </div>
-
+        
+            <AddTodo/>
 
        <div className='show-todo' >
             {todos.map((item, index)=> (
@@ -85,7 +47,7 @@ const TodoList = () => {
                     <p>description : {item.description}</p>
                     <p>category : {item.category}</p>
                     <input  type="checkbox" value={item.complete} />
-                    <TiDelete onClick={()=> deleteTodo(item)}/>
+                    <TiDelete className='deleteIcon' onClick={()=> deleteTodo(item)}/>
                    </Paper>
                 </Box>
             ))}
