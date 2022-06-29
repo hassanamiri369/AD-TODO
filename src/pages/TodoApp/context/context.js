@@ -1,23 +1,40 @@
-import React , {createContext , useReducer} from "react"
-import  nextId from "react-id-generator"
+import React , {createContext , useReducer , useEffect} from "react"
+
 
 export const todoContext = createContext()
 
 const initialState = {
-    todos : [
-        {id : nextId(), title : "title" , body : "body" , description : "description" , category : "category" , complete : false},
-        {id : nextId() , title : "title 2" , body : "body 2" , description : "description 2" , category : "category 2" , complete : false},
-        {id : nextId() , title : "title 3" , body : "body 3 " , description : "description 3" , category : "category 3" , complete : false},
-    ]
+    todos : localStorage.getItem("todoListApp") ? JSON.parse(localStorage.getItem("todoListApp")) : [] ,
+    currentTodo : {}
+
 }
-
-
 const reducer = (state , action ) => {
     switch(action.type){
         case "addTodo":
             return {...state , todos : [...state.todos , action.payload]}
         case "deleteTodo":
             return {...state , todos : action.payload}
+        
+        case "toggleTodo":
+            return{...state , todos : action.payload}
+        
+        case "setCurrentTodoEditMode" :
+            return {...state , currentTodo : action.payload}
+        
+        case "deleteAllTodo" :
+            return {...state  , todos : [] , currentTodo : {}}
+
+        case "editTodo":
+            const updateTodo = {...state.currentTodo , title : action.payload.title , description : action.payload.description , body : action.payload.body , category : action.payload.category }
+
+            const updateTodoIndex = state.todos.findIndex((t)=> t.id === state.currentTodo.id)
+
+            const updateTodos = [...state.todos.slice(0 ,updateTodoIndex) , updateTodo , ...state.todos.slice(updateTodoIndex + 1)]
+
+            return {...state , currentTodo : {} , todos : updateTodos}
+
+        
+
         default : 
             return state
     }
@@ -27,6 +44,12 @@ const TodoContextProvider = (props)=>{
 
 
     const [state , dispatch ] = useReducer(reducer , initialState)
+
+    useEffect(()=>{
+        localStorage.setItem("todoListApp" , JSON.stringify(state.todos))
+    } , [state.todos])
+
+
 
     const value = {state , dispatch}
     return (
