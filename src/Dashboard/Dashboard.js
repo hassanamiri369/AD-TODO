@@ -35,9 +35,10 @@ const Dashboard = () => {
           {/* side bar ===> links */}
           <SideBar closeMenu={closeMenu} menu={menu} />
         </div>
-        <div>
+
+        <div style={{width : "100%"}}>
           {/* main   ====> routes(pages)*/}
-          <Main className={`${menu ? "main" : "main-click-close"}`}/>
+          <Main className="main"/>
 
         </div>
 
