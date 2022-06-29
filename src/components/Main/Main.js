@@ -7,18 +7,22 @@ import TodoApp from '../../pages/TodoApp/TodoApp'
 
 // routes 
 import {routes} from "../../routes/routes"
+
+import './Style.css'
+import TodoDetails from '../../pages/TodoApp/TodoDetails'
 const Main = () => {
   return (
 
     <>
-      <div>
-        <h3>Main</h3>
+      <div className='main-container'>
+        {/* <h3>Main</h3> */}
         <div>
           <Routes>
-            <Route path='/' element={<Home />} />
+            {/* <Route path='/' element={<Home />} />
             <Route path='/about' element={<About />} />
             <Route path='/todoApp' element={<TodoApp />} />
-           {/* {routes.map(route => <Route path={route.path} element={route.element}/>)} */}
+            <Route path="/todoApp/:id" element={<TodoDetails/>}/> */}
+           {routes.map(route => <Route path={route.path} element={route.element}/>)}
           </Routes>
 
         </div>
