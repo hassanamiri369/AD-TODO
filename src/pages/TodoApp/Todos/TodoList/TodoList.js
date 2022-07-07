@@ -89,9 +89,22 @@ const TodoList = () => {
     }
   }, [currentTodo, currentTodo.id])
 
+  // timer 
+
+  const timer = new Date()
+  const day = timer.getDate();
+  const month = timer.getMonth() + 1;
+  const year = timer.getFullYear()
+  const time = timer.toISOString()
+  // const tarik_miladi = "روز / ماه / سال"
+  const Tarik_Miladi = `${year} / ${month} / ${day} - ${time}`
+  console.log(Tarik_Miladi)
+  
+
+  
 
   // create new todo / edit todo 
-  const newTodo = { id: nextId(), title, body, category, description, complete: false }
+  const newTodo = { id: nextId(), title, body, category, description, complete: false , timerStamp : Tarik_Miladi }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -154,6 +167,19 @@ const TodoList = () => {
   const unDoneTodoCount = []
   const todoCunt = todos.map(item => item.complete ? doneTodoCount.push(item) : unDoneTodoCount.push(item))
 
+
+
+
+  
+
+
+
+
+
+
+
+
+
   return (
     <>
     <ToastContainer   autoClose={2000}   /> 
@@ -200,11 +226,13 @@ const TodoList = () => {
             
             <div className={`${item.complete ? "show-item-complete" : "show-item"}`} key={item.id}>
               <div>
-                <p>id : {item.id}</p>
-                <p>title : {item.title}</p>
+                {/* <p>id : {item.id}</p> */}
+                <h2>category : {item.category}</h2>
+                <h3>title : {item.title}</h3>
                 <p>body : {item.body}</p>
-                <p>description : {item.description}</p>
-                <p>category : {item.category}</p>
+                <h4>description : {item.description}</h4>
+                <p>create At : {item.timerStamp}</p>
+              
 
                 <input type="checkbox" checked={item.complete} onChange={() => toggleCheckBox(item)} />
                 <div className='button-edit-delete'>

@@ -33,14 +33,17 @@ html , body{
   color: black;
   transition: all 1s ease;
   height: 100vh;
+  transition: all 1s ease;
   padding: 20px;
 }
 
 .todoLight{
   background-color: white;
   color: black;
+  transition: all 1s ease;
 }
 .todoDark {
   background-color: rgb(26, 37, 63);
   color: white;
+  transition: all 1s ease;
 }
