@@ -1,4 +1,6 @@
-import React , {useState}from 'react'
+import React , {useState , useContext}from 'react'
+
+import { themeContext } from '..';
 
 // style 
 import "./Style.css"
@@ -14,6 +16,10 @@ import Main from '../components/Main/Main'
 
 const Dashboard = () => {
 
+  const { theme, setTheme , toggleTheme } = useContext(themeContext)
+
+  
+
    const [menu , setMenu] = useState(false)
    const closeMenu = ()=> setMenu(false)
    const openMenu = ()=> setMenu(true)
@@ -23,7 +29,7 @@ const Dashboard = () => {
     <div className='Dashboard'>
 
 
-      <div className='header'>
+      <div className={`${theme === "light" ? "lightHeader" : "darkHeader"}`}>
         {/* header */}
         <Header openMenu={openMenu} menu={menu}/>
       </div>
