@@ -18,11 +18,11 @@ const Main = () => {
         {/* <h3>Main</h3> */}
         <div>
           <Routes>
-            {/* <Route path='/' element={<Home />} />
+            <Route path='/' element={<Home />} />
             <Route path='/about' element={<About />} />
             <Route path='/todoApp' element={<TodoApp />} />
-            <Route path="/todoApp/:id" element={<TodoDetails/>}/> */}
-           {routes.map(route => <Route path={route.path} element={route.element}/>)}
+            <Route path="/todoApp/:id" element={<TodoDetails/>}/>
+           {/* {routes.map(route => <Route path={route.path} element={route.element}/>)} */}
           </Routes>
 
         </div>
