@@ -16,6 +16,31 @@ html , body{
 
 .todoApp-container{
   width: 100%;
-  /* background-color: darkblue; */
+  background-color: darkblue;
 }
 
+
+.homeDark{
+  background-color: rgb(26, 37, 63);
+  color: white;
+  transition: all 1s ease;
+  height: 100vh;
+  padding: 20px;
+}
+
+.homeLight{
+  background-color: white;
+  color: black;
+  transition: all 1s ease;
+  height: 100vh;
+  padding: 20px;
+}
+
+.todoLight{
+  background-color: white;
+  color: black;
+}
+.todoDark {
+  background-color: rgb(26, 37, 63);
+  color: white;
+}
