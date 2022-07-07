@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { todoContext } from '../../context/context'
+import { ToastContainer, toast } from 'react-toastify';
+// import { AnimationOnScroll } from 'react-animation-on-scroll';
 
+import 'react-toastify/dist/ReactToastify.css';
 
 import Box from '@mui/material/Box';
-
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -23,7 +25,11 @@ import { BiCommentDetail } from 'react-icons/bi';
 
 import nextId from 'react-id-generator';
 import "./style.css"
+// import "animate.css/animate.min.css";
 import { Link } from 'react-router-dom';
+import SearchInput from '../SearchInput/SearchInput';
+import { AddTodo } from '../AddTodo/AddTodo';
+import FilterTodo from '../FilterTodo/FilterTodo';
 // material ui component
 
 
@@ -61,6 +67,12 @@ const TodoList = () => {
 
 
 
+    // toastify 
+    const DeleteToast = (todoItem)=> toast.error(`todo ${todoItem} deleted success ` , {position : "top-right" , autoClose : true , theme : "colored"})
+    const addTost = (toastItem)=> toast.success(`success todo ${toastItem} added ` ,  {autoClose : true , position : toast.POSITION.TOP_LEFT , theme : "colored"})
+    const editToast = (toastItem)=> toast.info(`success todo ${toastItem} edit ` , {position : "top-right" , className : "editToast" , theme : "colored"})
+
+
   //  set old data into inputs
   useEffect(() => {
     if (currentTodo.body || currentTodo.title || currentTodo.category || currentTodo || currentTodo.description) {
@@ -86,8 +98,10 @@ const TodoList = () => {
 
     if (currentTodo.body || currentTodo.title || currentTodo.category || currentTodo.description) {
       dispatch({ type: "editTodo", payload: newTodo })
+      editToast(newTodo.category)
     } else {
       dispatch({ type: "addTodo", payload: newTodo })
+      addTost(newTodo.category)
     }
 
     setTitle("")
@@ -103,6 +117,7 @@ const TodoList = () => {
   const deleteTodo = (todo) => {
     const updateTodo = todos.filter(item => item.id !== todo.id)
     dispatch({ type: "deleteTodo", payload: updateTodo })
+    DeleteToast(todo.title)
 
   }
 
@@ -126,8 +141,10 @@ const TodoList = () => {
 
   // click ot delete all todo 
   const deleteClickHandler = () => {
-    window.confirm("Do you really want to leave?")
-    dispatch({ type: "deleteAllTodo" })
+    if(window.confirm("Do you really want to Delete?")){
+
+      dispatch({ type: "deleteAllTodo" })
+    }
   }
 
 
@@ -139,91 +156,56 @@ const TodoList = () => {
 
   return (
     <>
+    <ToastContainer   autoClose={2000}   /> 
       <div className="todo-list-container">
 
+   
+        <div className='search-container'>
+        <SearchInput  todos={todos}/>
+        </div>
+
+      
         <div className='add-todo'>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <Box>
-
-              <TextField label="title" required value={title} onChange={(e) => setTitle(e.target.value)} />
-            </Box>
-
-            <div>
-
-              <TextField label="body" required value={body} onChange={(e) => setBody(e.target.value)} />
-            </div>
-
-            <div>
-
-              <TextField label="description" required value={description} onChange={(e) => setDescription(e.target.value)} />
-            </div>
-
-            <div>
-
-              <TextField label="category" required value={category} onChange={(e) => setCategory(e.target.value)} />
-            </div>
-            <div>
-              {
-                currentTodo.title ?
-                  (<Button variant='contained' type={'submit'}>Edit todo</Button>)
-                  :
-                  (<Button variant='contained' type={'submit'}>Add todo</Button>)
-              }
-
-            </div>
-
-
-          </form>
+          <AddTodo
+          currentTodo={currentTodo} 
+          handleSubmit={handleSubmit} 
+          title={title} 
+          setTitle={setTitle} 
+          body={body} 
+          setBody={setBody} 
+          description={description} 
+          setDescription={setDescription} 
+          category={category} 
+          setCategory={setCategory} 
+          />
+          
         </div>
 
 
         <div className='other-items'>
 
-          {/* select todo filter */}
-          <div className='select-todo'>
-            <div className='select-item'>
-              <FormControl fullWidth>
-                {/* <InputLabel>Todo</InputLabel> */}
-
-                <Select value={size} onChange={(e) => setSize(e.target.value)}>
-                  <MenuItem value="All">All</MenuItem>
-                  <MenuItem value="done">Done</MenuItem>
-                  <MenuItem value="undone">Undone</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-
-          {/* delete all todo button  */}
-          <div className='delete-All-Todo-Button'>
-            <Button variant='contained' color='secondary' onClick={deleteClickHandler}>Delete All Todo</Button>
-          </div>
-
-
-          {/* show count done and undone todo  */}
-
-          <div className='show-count-done-todo'>
-            <div>Count All Todo : {todos.length}</div>
-            <div>
-              <p>Done Todo : {doneTodoCount.length}</p>
-              <p>Undone Todo : {unDoneTodoCount.length}</p>
-            </div>
-          </div>
-
-
-
+          <FilterTodo 
+          size={size}  
+          setSize={setSize}  
+          deleteClickHandler={deleteClickHandler} 
+          todos={todos} 
+          doneTodoCount={doneTodoCount} 
+          unDoneTodoCount={unDoneTodoCount}
+          />
         </div>
 
 
         <div className='show-todo' >
           {dataAfterFilter.map((item, index) => (
-            <div className='show-item' key={item.id}>
+            
+            <div className={`${item.complete ? "show-item-complete" : "show-item"}`} key={item.id}>
               <div>
                 <p>id : {item.id}</p>
                 <p>title : {item.title}</p>
                 <p>body : {item.body}</p>
                 <p>description : {item.description}</p>
                 <p>category : {item.category}</p>
+
                 <input type="checkbox" checked={item.complete} onChange={() => toggleCheckBox(item)} />
                 <div className='button-edit-delete'>
                   <Tooltip title="Delete" placement="top">
@@ -234,17 +216,17 @@ const TodoList = () => {
                   </Tooltip>
 
                   <Tooltip title="Edit" placement="top">
-                    <IconButton>
-                      <TbEdit className='editIcon' onClick={() => editMode(item)} />
+                    <IconButton onClick={() => editMode(item)}>
+                      <TbEdit className='editIcon' />
                     </IconButton>
 
                   </Tooltip>
 
-                  <Tooltip title="Detail-Todo">
+                  <Tooltip title="Detail-Todo" placement="top">
                     <IconButton>
-                  
-                        <Link to={`/todoApp/${item.id}`}>    <BiCommentDetail /></Link>
-                      
+
+                      <Link to={`/todoApp/${item.id}`}>    <BiCommentDetail /></Link>
+
                     </IconButton>
                   </Tooltip>
 
@@ -254,6 +236,7 @@ const TodoList = () => {
                 </div>
               </div>
             </div>
+            
           ))}
         </div>
       </div>
