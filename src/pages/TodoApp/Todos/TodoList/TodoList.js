@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { todoContext } from '../../context/context'
 import { ToastContainer, toast } from 'react-toastify';
 // import { AnimationOnScroll } from 'react-animation-on-scroll';
-
+import moment from "jalali-moment"
 import 'react-toastify/dist/ReactToastify.css';
 
 import Box from '@mui/material/Box';
@@ -95,16 +95,22 @@ const TodoList = () => {
   const day = timer.getDate();
   const month = timer.getMonth() + 1;
   const year = timer.getFullYear()
-  const time = timer.toISOString()
+  const timerStampCreate = timer.toLocaleTimeString()
+  
   // const tarik_miladi = "روز / ماه / سال"
-  const Tarik_Miladi = `${year} / ${month} / ${day} - ${time}`
-  console.log(Tarik_Miladi)
+  const Tarik_Miladi = `${year} / ${month} / ${day}  `
+  
+  
+  const myMoment = moment(Tarik_Miladi , 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD');
+  const newDate = `${myMoment} - ${timerStampCreate}`
+  console.log(myMoment)
   
 
+  
   
 
   // create new todo / edit todo 
-  const newTodo = { id: nextId(), title, body, category, description, complete: false , timerStamp : Tarik_Miladi }
+  const newTodo = { id: nextId(), title, body, category, description, complete: false , timerStamp : newDate}
 
   const handleSubmit = (e) => {
     e.preventDefault()
