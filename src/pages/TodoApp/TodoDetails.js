@@ -45,6 +45,7 @@ const TodoDetails = () => {
                     <h3>Title : {oneTodo && oneTodo.title}</h3>
                     <h3>Body : {oneTodo && oneTodo.body}</h3>
                     <h4>Description : {oneTodo && oneTodo.description}</h4>
+                    <h5>create At : {oneTodo && oneTodo.timerStamp}</h5>
                 </div>
             </div>
 
