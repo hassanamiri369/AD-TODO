@@ -33,6 +33,10 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.show-todo div> h2{
+    color : red;
+}
 .show-item{
     margin: 15px;
     padding: 10px;

@@ -1,4 +1,4 @@
-import React , {useContext , createContext} from 'react';
+import React , { createContext} from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 // todo context 
@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 
 export const themeContext = createContext()
 
@@ -26,6 +27,7 @@ const ThemeContextProvider = (props) =>{
     }
   }
 
+
   React.useEffect(()=> {
     const localTheme = window.localStorage.getItem("themeMode")
     if(localTheme){
@@ -36,6 +38,8 @@ const ThemeContextProvider = (props) =>{
 
 
   const value = {theme , setTheme ,toggleTheme}
+
+  
   return(
     <themeContext.Provider value={value}>
       {props.children}

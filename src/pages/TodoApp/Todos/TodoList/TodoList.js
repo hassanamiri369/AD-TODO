@@ -5,15 +5,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import moment from "jalali-moment"
 import 'react-toastify/dist/ReactToastify.css';
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+
 
 
 
@@ -232,7 +226,6 @@ const TodoList = () => {
             
             <div className={`${item.complete ? "show-item-complete" : "show-item"}`} key={item.id}>
               <div>
-                {/* <p>id : {item.id}</p> */}
                 <h2>category : {item.category}</h2>
                 <h3>title : {item.title}</h3>
                 <p>body : {item.body}</p>

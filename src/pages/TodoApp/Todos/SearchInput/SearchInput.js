@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { Button } from '@mui/material'
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import { BiCommentDetail } from 'react-icons/bi';
 
 import { BiSearchAlt } from 'react-icons/bi';
 import { AiFillCloseCircle } from 'react-icons/ai';
@@ -13,26 +17,26 @@ import "./Style.css"
 const customStyles = {
     content: {
         width: "400px",
-        height : "300px",
+        height: "300px",
         top: '50%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        display : "flex",
-        flexDirection : "column",
-        background : "lightBlue",
-        lineHeight : "50px",
-        
-  
+        display: "flex",
+        flexDirection: "column",
+        background: "lightBlue",
+        lineHeight: "50px",
+
+
     },
 
-    span : {
+    span: {
         // background : "red",
-        fontSize : "26px",
-        display : "flex",
-        justifyContent : "flex-end",
+        fontSize: "26px",
+        display: "flex",
+        justifyContent: "flex-end",
         cursor: "pointer",
     }
 };
@@ -60,6 +64,7 @@ const SearchInput = ({ todos }) => {
         setSearchList([])
     }
 
+    // modal state
     let subtitle;
     const [product, setProduct] = useState(null)
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -77,10 +82,10 @@ const SearchInput = ({ todos }) => {
         subtitle.style.color = '#f00';
     }
 
-   
-    const CloseModal = ()=> setIsOpen(false)
 
-  
+    const CloseModal = () => setIsOpen(false)
+
+
 
 
     return (
@@ -110,7 +115,7 @@ const SearchInput = ({ todos }) => {
                         {product &&
                             <div>
                                 <Modal
-                                
+
                                     isOpen={modalIsOpen}
                                     onAfterOpen={afterOpenModal}
                                     onRequestClose={CloseModal}
@@ -118,11 +123,20 @@ const SearchInput = ({ todos }) => {
                                     contentLabel="Example Modal"
                                 >
 
-                                    <span  style={customStyles.span} ><AiFillCloseCircle onClick={CloseModal} /></span>
+                                    <span style={customStyles.span} ><AiFillCloseCircle onClick={CloseModal} /></span>
                                     <p>{product.category}</p>
                                     <p>{product.title}</p>
-                                    <p>{product.body}</p>
-                                    <p>{product.description}</p>
+                                    {/* <p>{product.body}</p>
+                                    <p>{product.description}</p> */}
+                                    <p>
+                                    <Tooltip title="Detail-Todo" placement="top">
+                                        <IconButton>
+
+                                            <Link to={`/todoApp/${product.id}`}>    <BiCommentDetail /></Link>
+
+                                        </IconButton>
+                                    </Tooltip>
+                                    </p>
 
                                 </Modal>
                             </div>}

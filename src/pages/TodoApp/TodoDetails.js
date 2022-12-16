@@ -33,7 +33,8 @@ const TodoDetails = () => {
 
             <div className='detail-title-button'>
                 <h1>TodoDetails</h1>
-                <Button  onClick={() => history("/todoApp")} variant='contained' color="info" type={'submit'}>Go Back</Button>
+                <Button  onClick={() => history("/todoApp")} 
+                variant='contained' color="info" type={'submit'}>Go Back</Button>
                
             </div>
 
